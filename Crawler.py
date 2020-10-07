@@ -1,6 +1,7 @@
-import Database, Utils
-import requests
+from Database import Database
 from bs4 import BeautifulSoup
+import Utils
+import requests
 
 class Crawler():
     __base_url = "https://news.nate.com/view/"
