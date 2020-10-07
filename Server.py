@@ -1,8 +1,11 @@
+from Crawler import Crawler
 from flask import Flask, request, jsonify
+import json
 
 class Server:
-        def __init__(self):
+        def __init__(self, taskmanager):
                 self.app = Flask(__name__)
+                self.tm = taskmanager
                 print("Initialize Server...")
 
                 @self.app.route("/", methods=["GET"])
@@ -21,25 +24,23 @@ class Server:
 
                 @self.app.route("/home", methods=["GET"])
                 def get_latest_news():
-                        # latest_news_list = json.loads(self.tm.get_latest_news())
-                        return jsonify({
-                                "result": "This is home"
-                        })
+                        news_list = json.loads(self.tm.get_latest_news())
+                        return json.dumps(news_list, ensure_ascii=False)
 
                 @self.app.route("/news", methods=["GET"])
                 def get_news_by_category():
                         category = request.args.get("cate")
                         limit = int(request.args.get("limit"))
-                        # parsed = json.loads(self.tm.get_news_by_category(category, limit))
-                        return jsonify({
-                                "result": "This is category news"
-                        })
+                        news_list = json.loads(self.tm.get_news_by_category(category, limit))
+                        return json.dumps(news_list, ensure_ascii=False)
+
                 @self.app.route("/crawling", methods=["GET"])
                 def crawling():
-
+                        crawler = Crawler()
+                        crawler.crawl()
                         return jsonify({
-                                "result": "크롤링 테스트"
-                        })
+                                "result": "크롤링 테스트 완료"
+                       })
 
         def run(self, host, port):
                 print("Server On")
