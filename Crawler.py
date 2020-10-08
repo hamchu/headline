@@ -60,7 +60,7 @@ class Crawler():
         # 임시로 그림없는 기사는 버리는 걸로 해놓음.
         if (soup.find('span', class_='imgad_area') == None): return
         thumbnail_temp = "https:" + str(soup.find('span', class_='imgad_area').find('img').get('src'))
-        thumbnail = Utils.insert_image(thumbnail_temp)
+        thumbnail = Utils.encode_image_to_base64string(thumbnail_temp)
 
         # news_original_firm = soup.find('a', class_='medium').getText()  # 언론사
         news = {
