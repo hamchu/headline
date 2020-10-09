@@ -1,5 +1,8 @@
 .idea/
 
+# fasttext model file
+fasttext/cc.ko.300.bin
+
 # temporary files
 *.log
 *.pot
