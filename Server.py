@@ -16,7 +16,8 @@ class Server:
 
                 @self.app.route("/summary", methods=["GET"])
                 def summarize_news():
-                        summary = self.tm.summarize_news()
+                        text = request.args.get("text")
+                        summary = self.tm.summarize_news(text)
 
                         return jsonify({
                                 "result": summary
@@ -39,7 +40,7 @@ class Server:
                         crawler = Crawler()
                         crawler.crawl()
                         return jsonify({
-                                "result": "크롤링 테스트 완료"
+                                "result": "Crawling Test"
                        })
 
         def run(self, host, port):

@@ -1,5 +1,6 @@
 from Server import Server
 from Database import Database
+from Summarizer import Summarizer
 from TaskManager import TaskManager
 HOST = '0.0.0.0'
 PORT = 5000
@@ -9,7 +10,8 @@ DBHOST = "121.150.135.175"
 DBPORT = 27017
 
 if __name__ == '__main__':
-    tm = TaskManager()
+    summarizer = Summarizer()
+    tm = TaskManager(summarizer)
     Database(DBHOST, DBPORT)
     server = Server(tm)
     server.run(HOST, PORT)
