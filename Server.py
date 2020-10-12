@@ -19,9 +19,9 @@ class Server:
                         text = request.args.get("text")
                         summary = self.tm.summarize_news(text)
 
-                        return jsonify({
+                        return json.dumps({
                                 "result": summary
-                        })
+                        }, ensure_ascii=False)
 
                 @self.app.route("/home", methods=["GET"])
                 def get_latest_news():
