@@ -1,18 +1,19 @@
 from Database import Database
+from Summarizer import Summarizer
 from bson.json_util import dumps
 
 class TaskManager():
-    # summarizer = Summarizer()
     # scheduler = Scheduler()
-    def __init__(self):
+    def __init__(self, summarizer):
         print("TaskManager Initializing...")
+        self.summarizer = summarizer;
         print("TaskManager - Done!")
 
     def __del__(self):
         pass
 
-    def summarize_news(self):
-        summary = "This is News Summary"
+    def summarize_news(self, text):
+        summary = self.summarizer.summarize(text)
         return summary
 
     def get_latest_news(self):
