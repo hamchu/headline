@@ -5,9 +5,8 @@ import networkx as nx
 
 class Summarizer():
     def __init__(self):
-        print("Summarizer Initializing...")
         self.sentence_processor = SentenceProcessor()
-        print("Summarizer - Done!")
+        print("Summarizer initializing - Done!")
 
     def calculate_similarity_matrix(self, embedded_sentences):
         similarity_matrix = np.zeros([len(embedded_sentences), len(embedded_sentences)])

@@ -4,16 +4,17 @@ from bson.json_util import dumps
 
 class TaskManager():
     # scheduler = Scheduler()
+    __summarizer = None;
+
     def __init__(self, summarizer):
-        print("TaskManager Initializing...")
-        self.summarizer = summarizer;
-        print("TaskManager - Done!")
+        self.__summarizer = summarizer;
+        print("TaskManager initializing - Done!")
 
     def __del__(self):
         pass
 
     def summarize_news(self, text):
-        summary = self.summarizer.summarize(text)
+        summary = self.__summarizer.summarize(text)
         return summary
 
     def get_latest_news(self):
@@ -29,5 +30,4 @@ class TaskManager():
         collection = db.get_collection("news")
         query = {"category": category}
         documents = dumps(collection.find(query).sort("date",-1).limit(limit), ensure_ascii=False)
-
         return documents

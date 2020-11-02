@@ -1,30 +1,20 @@
 from Database import Database
 from bs4 import BeautifulSoup
-import Utils
-import requests
-import re
-import time
+import Utils, requests, re, time
 
 class Crawler():
     __base_url = "https://news.daum.net/breakingnews/"
 
     def __init__(self):
-        print("Crawler Initializing...")
-        print("Crawler - Done!")
-
-    def __del__(self):
-        pass
+        print("Crawler initializing - Done!")
 
     def crawl(self, category, date):
         print("crawling...")
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36'}
-        # TODO : 크롤링 처리 범위 해결해야함.
         page = 1
         while True:
             page_url = self.__base_url + str(category) +'?page=' + str(page) + '&regDate=' + str(date)
             print("nownownownow : "+ page_url)
-            req = requests.get(page_url, headers=headers)
+            req = requests.get(page_url)
             html = req.content
             soup = BeautifulSoup(html, 'lxml')
 
@@ -39,14 +29,10 @@ class Crawler():
             if(page%2 == 0): time.sleep(12)
             page += 1
 
-
         print("crawling done!")
 
     def parse_page(self, source_url):
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36'}
-
-        req = requests.get(source_url, headers=headers)
+        req = requests.get(source_url)
         if (req.request.url[35:41] == "sports"): return  # sports 뉴스면 return
 
         print("now : " + str(req.request.url))
