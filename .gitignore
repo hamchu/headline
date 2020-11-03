@@ -1,4 +1,5 @@
 .idea/
+SummarizerTest.py
 
 # fasttext model file
 fasttext/cc.ko.300.bin
