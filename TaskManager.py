@@ -3,15 +3,10 @@ from Summarizer import Summarizer
 from bson.json_util import dumps
 
 class TaskManager():
-    # scheduler = Scheduler()
-    __summarizer = None;
-
     def __init__(self, summarizer):
-        self.__summarizer = summarizer;
+        self.__summarizer = summarizer
+        # self.__scheduler = Scheduler()
         print("TaskManager initializing - Done!")
-
-    def __del__(self):
-        pass
 
     def summarize_news(self, text):
         summary = self.__summarizer.summarize(text)

@@ -33,7 +33,6 @@ class Crawler():
 
     def parse_page(self, source_url):
         req = requests.get(source_url)
-        if (req.request.url[35:41] == "sports"): return  # sports 뉴스면 return
 
         print("now : " + str(req.request.url))
         html = req.content
@@ -52,7 +51,7 @@ class Crawler():
         if (len(news_contents) < 30): return  # 기사 내용이 30자 보다 작으면 return
 
         if (soup.find('div', class_='inner_gnb') == None):
-            category = "연예"
+            category = "미분류"
         else:
             category = soup.find('div', id='kakaoContent').find('h2').getText()
 
@@ -67,7 +66,6 @@ class Crawler():
             "title": news_title,
             "contents": news_contents,
             "thumbnail": thumbnail,
-            "original_url": news_original,
             "source_url": source_url,
             "date": news_date,
         }

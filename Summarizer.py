@@ -5,7 +5,7 @@ import networkx as nx
 
 class Summarizer():
     def __init__(self):
-        self.sentence_processor = SentenceProcessor()
+        self.__sentence_processor = SentenceProcessor()
         print("Summarizer initializing - Done!")
 
     def calculate_similarity_matrix(self, embedded_sentences):
@@ -24,13 +24,13 @@ class Summarizer():
         return scores
 
     def summarize(self, text):
-        tokenized_sentences = self.sentence_processor.tokenize_sentence(text)
-        preprocessed_sentences = self.sentence_processor.preprocess_sentence(tokenized_sentences)
-        embedded_sentences = self.sentence_processor.embed_sentence(preprocessed_sentences)
+        tokenized_sentences = self.__sentence_processor.tokenize_sentence(text)
+        preprocessed_sentences = self.__sentence_processor.preprocess_sentence(tokenized_sentences)
+        embedded_sentences = self.__sentence_processor.embed_sentence(preprocessed_sentences)
         similarity_matrix = self.calculate_similarity_matrix(embedded_sentences)
         scores = self.get_score(similarity_matrix)
 
-        score_ranking_list = sorted(((scores[i], s) for i, s in enumerate(self.sentence_processor.get_tokenized_sentences(text))),
+        score_ranking_list = sorted(((scores[i], s) for i, s in enumerate(self.__sentence_processor.get_tokenized_sentences(text))),
                             reverse=True)
         top_sentences = [sentence for score, sentence in score_ranking_list[:3]]
         summary = " ".join(top_sentences)

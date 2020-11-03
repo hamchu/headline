@@ -3,10 +3,6 @@ from flask import Flask, request, jsonify
 import json
 
 class Server:
-        __app = None
-        __tm = None
-        __crawler = None # 임시
-
         def __init__(self, taskmanager):
                 self.__app = Flask(__name__)
                 self.__tm = taskmanager

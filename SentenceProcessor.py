@@ -3,11 +3,10 @@ from nltk import sent_tokenize, word_tokenize
 import pandas as pd
 
 class SentenceProcessor():
-
     def __init__(self):
-        # self.fasttext_model = models.fasttext.load_facebook_model('fasttext/cc.ko.300.bin')  # 300차원
+        self.__fasttext_model = models.fasttext.load_facebook_model('fasttext/cc.ko.300.bin')  # 300차원
         print("Load FastText Model...")
-        self.stop_words = sum(pd.read_csv("data/stop_words.csv").values.tolist(),[])
+        self.__stop_words = sum(pd.read_csv("data/stop_words.csv").values.tolist(),[])
         print("Load stop_words...")
         print("SentenceProcessor initializing - Done!")
 
@@ -20,7 +19,7 @@ class SentenceProcessor():
         preprocessed_sentences = []
 
         for sentence in sentences:
-            temp = [word for word in sentence if word not in self.stop_words and word]
+            temp = [word for word in sentence if word not in self.__stop_words and word]
             preprocessed_sentences.append(temp)
 
         return preprocessed_sentences
@@ -29,7 +28,7 @@ class SentenceProcessor():
         embedded_sentences = []
 
         for sentence in sentences:
-            temp = sum([self.fasttext_model.wv.__getitem__(word) for word in sentence]) / len(sentence)
+            temp = sum([self.__fasttext_model.wv.__getitem__(word) for word in sentence]) / len(sentence)
             embedded_sentences.append(temp)
 
         return embedded_sentences
