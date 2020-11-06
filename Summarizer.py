@@ -12,9 +12,10 @@ class Summarizer():
         similarity_matrix = np.zeros([len(embedded_sentences), len(embedded_sentences)])
 
         for i in range(len(embedded_sentences)):
-            for j in range(len(embedded_sentences)):
+            for j in range(i+1, len(embedded_sentences)):
                 similarity_matrix[i][j] = cosine_similarity(embedded_sentences[i].reshape(1, 300),
                                                   embedded_sentences[j].reshape(1, 300))[0, 0]
+                similarity_matrix[j][i] = similarity_matrix[i][j]
 
         return similarity_matrix
 
