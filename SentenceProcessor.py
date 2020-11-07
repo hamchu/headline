@@ -4,10 +4,10 @@ import pandas as pd
 
 class SentenceProcessor():
     def __init__(self):
-        self.__fasttext_model = models.fasttext.load_facebook_model('fasttext/cc.ko.300.bin')  # 300차원
         print("Load FastText Model...")
-        self.__stop_words = sum(pd.read_csv("data/stop_words.csv").values.tolist(),[])
+        self.__fasttext_model = models.fasttext.load_facebook_model('fasttext/cc.ko.300.bin')  # 300차원
         print("Load stop_words...")
+        self.__stop_words = sum(pd.read_csv("data/stop_words.csv").values.tolist(),[])
         print("SentenceProcessor initializing - Done!")
 
     def tokenize_sentence(self, sentences):

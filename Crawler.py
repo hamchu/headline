@@ -13,7 +13,7 @@ class Crawler():
         page = 1
         while True:
             page_url = self.__base_url + str(category) +'?page=' + str(page) + '&regDate=' + str(date)
-            print("nownownownow : "+ page_url)
+            print("list-page : "+ page_url)
             req = requests.get(page_url)
             html = req.content
             soup = BeautifulSoup(html, 'lxml')
@@ -37,13 +37,9 @@ class Crawler():
         print("now : " + str(req.request.url))
         html = req.content
         soup = BeautifulSoup(html, 'lxml')
-        if (soup.find('span', class_='num_date') == None): return # 날짜가 없으면 return
-        if (soup.find('h3', class_='tit_view') == None): return # 기사 제목이 없으면 return
 
         news_date = soup.find('span', class_='num_date').getText()  # 뉴스 날짜
         news_title = soup.find('h3', class_='tit_view').getText()  # 뉴스 제목
-
-        news_original = str(req.request.url)
 
         news_contents = str(soup.find_all('p', attrs={'dmcf-ptype': 'general'}))
         news_contents = re.sub('<.+?>', '', news_contents, 0).replace('[', '').replace(']', '').replace(',', '')
@@ -55,11 +51,11 @@ class Crawler():
         else:
             category = soup.find('div', id='kakaoContent').find('h2').getText()
 
-        # 임시로 그림없는 기사는 버리는 걸로 해놓음.
-        if (soup.find('p', class_='link_figure') == None): return
-
-        thumbnail_temp = str(soup.find('p', class_='link_figure').find('img').get('src'))
-        thumbnail = Utils.encode_image_to_base64string(thumbnail_temp)
+        if (soup.find('p', class_='link_figure') == None):
+            thumbnail = None
+        else:
+            thumbnail_temp = str(soup.find('p', class_='link_figure').find('img').get('src'))
+            thumbnail = Utils.encode_image_to_base64string(thumbnail_temp)
 
         news = {
             "category": category,
